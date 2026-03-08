@@ -1,0 +1,61 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-top": 10,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 5,
+
+    // Moduli a sinistra: Workspace e Finestra attiva
+    "modules-left": ["sway/workspaces"],
+
+    // Moduli al centro: Orologio stile Android Lockscreen
+    "modules-center": ["clock"],
+
+    // Moduli a destra: Status (Volume, WiFi, Batteria)
+    "modules-right": ["pulseaudio", "network", "battery", "tray"],
+
+    // --- CONFIGURAZIONE MODULI ---
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": []
+        }
+    },
+
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%H:%M  •  %a %d %b}"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": " Eth",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "⚠ Off",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capac

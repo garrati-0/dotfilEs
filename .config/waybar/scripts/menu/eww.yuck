@@ -1,0 +1,37 @@
+(defwindow sysmenu
+    :monitor 0
+    :geometry (geometry :x "10px"
+                        :y "10px"
+                        :width "200px"
+                        :anchor "top left")
+    :stacking "overlay"
+    :exclusive false
+    :namespace "sysmenu"
+    (menu_layout))
+
+(defwidget menu_layout []
+    ;; Avvolgiamo tutto in una eventbox con il delay (sleep)
+    (eventbox :onhoverlost "eww -c ~/.config/waybar/scripts/menu close sysmenu"
+        (box :orientation "v" :class "menu-box" :space-evenly false
+            (button :class "menu-btn" :onclick "kitty & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+                (label :xalign 0 :text "  Terminale"))
+            (button :class "menu-btn" :onclick "rofi --show drun & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+                (label :xalign 0 :text "  Launcher"))
+            (button :class "menu-btn" :onclick "kitty -e btm & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+                (label :xalign 0 :text "  Monitor"))
+            (button :class "menu-btn" :onclick "thunar & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+                (label :xalign 0 :text "  File Manager"))
+                (button :class "menu-btn" :onclick "python3 ~/Documenti/impostazioni/main.py & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+                (label :xalign 0 :text "  Impostazioni"))
+            
+            (box :class "separator")
+            
+            (button :class "menu-btn btn-logout" :onclick "hyprctl dispatch exit" 
+                (label :xalign 0 :text "󰍃  Logout"))
+            (button :class "menu-btn btn-reboot" :onclick "systemctl reboot" 
+                (label :xalign 0 :text "  Riavvia"))
+            (button :class "menu-btn btn-power" :onclick "systemctl poweroff" 
+                (label :xalign 0 :text "  Spegni"))
+        )
+    )
+)

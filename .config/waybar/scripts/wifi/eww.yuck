@@ -1,0 +1,51 @@
+;; Definisce la variabile che esegue lo script ogni 2 secondi per tenere i dati aggiornati
+(defpoll wifi_data :interval "2s" "~/.config/waybar/scripts/wifi/get_wifi.sh")
+
+;; Definisce la struttura del menu
+(defwidget wifi_layout []
+    (eventbox :onhoverlost "eww -c ~/.config/waybar/scripts/wifi close wifimenu"
+        (box :orientation "v" :class "menu-box" :space-evenly false
+            
+            ;; Header con icona, nome rete attuale e pulsante Accendi/Spegni
+            (box :orientation "h" :class "wifi-header" :space-evenly false
+                (label :class "wifi-icon" :text {wifi_data.icon})
+                (label :class "wifi-ssid" :limit-width 18 :text {wifi_data.ssid})
+                (button :class "toggle-btn" 
+                        :onclick "nmcli radio wifi ${wifi_data.status == 'enabled' ? 'off' : 'on'}"
+                        {wifi_data.status == "enabled" ? "Spegni" : "Accendi"})
+            )
+            
+            (box :class "separator")
+            
+            ;; Lista dinamica delle reti salvate nelle vicinanze
+            (box :orientation "v" :space-evenly false :class "networks-box"
+                (for net in {wifi_data.networks}
+                    (button :class {net.connected ? "net-btn connected" : "net-btn"}
+                            :onclick "nmcli connection up id '${net.ssid}' & eww -c ~/.config/waybar/scripts/wifi close wifimenu"
+                        (label :xalign 0 :limit-width 25 :text {net.connected ? "󰤨   ${net.ssid}" : "󰤯   ${net.ssid}"})
+                    )
+                )
+            )
+            
+            (box :class "separator")
+            
+            ;; Pulsante per aprire le impostazioni complete tramite nmtui
+            (button :class "menu-btn" 
+                    :onclick "python3 ~/Documenti/impostazioni/main.py & eww -c ~/.config/waybar/scripts/bluetooth close sysmenu"
+                (label :xalign 0 :text "󰒍  Impostazioni Rete"))
+        )
+    )
+)
+
+;; Definisce le proprietà della finestra da mostrare a schermo
+(defwindow wifimenu
+    :monitor 0
+    :geometry (geometry :x "50px" 
+                        :y "10px" 
+                        :width "300px" 
+                        :anchor "top right")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    (wifi_layout)
+)

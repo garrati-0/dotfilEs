@@ -1,0 +1,118 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "height": 28,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+
+    "margin-top": 5,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-bottom": 0,
+
+    "modules-left": ["custom/menu", "hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["cpu", "memory", "pulseaudio", "network", "bluetooth", "battery", "custom/control-center", "custom/power"],
+
+    // --- MODULO PROFILO ---
+    "custom/menu": {
+        "format": " garrati",
+        "tooltip": false,
+        "on-click": "eww -c ~/.config/waybar/scripts/menu open --toggle sysmenu" 
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "active-only": false,
+        "on-click": "activate",
+        "persistent-workspaces": {
+            "1": [], "2": [], "3": [], "4": []
+        },
+        "format": ""
+    },
+
+    // --- OROLOGIO ---
+    "clock": {
+        "format": "{:%a %d %b  |  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "cpu": {
+        "interval": 10,
+        "format": "CPU {usage}%",
+        "max-length": 10,
+        "on-click": "kitty btop"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": "RAM {}%",
+        "max-length": 10,
+        "tooltip": true,
+        "tooltip-format": "RAM: {used:0.1f}GB",
+        "on-click": "kitty btop"
+    },
+
+    // --- AUDIO ---
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 Muted",
+        "format-icons": {
+            "headphone": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "eww -c ~/.config/waybar/scripts/volume open --toggle audiomenu",
+        "tooltip": false
+    },
+
+    // --- RETE (ISOLA SEPARATA) ---
+"network": {
+    "interval": 2,
+    "format-wifi": " ",
+    "format-ethernet": "󰈀 ",
+    "format-linked": "󰈀 (No IP)",
+    "format-disconnected": "󰖪 ",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "on-click": "eww -c ~/.config/waybar/scripts/wifi open --toggle wifimenu", 
+    "on-click-right": "mode",
+    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>"
+},
+
+    // --- BLUETOOTH (ISOLA SEPARATA) ---
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "󰂲",
+        "format-connected": "󰂱",
+        "tooltip-format": "{controller_alias}\n{num_connections} dispositivi connessi",
+        "on-click": "eww -c ~/.config/waybar/scripts/bluetooth open bluetoothmenu"
+    },
+
+    // --- BATTERIA (ISOLA SEPARATA) ---
+    "battery": {
+        "states": { "good": 95, "warning": 30, "critical": 15 },
+        "format": "{icon}  {capacity}%",
+        "format-alt": "󰔟 {time}",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "on-click-right": "mode" 
+    },
+
+    // --- CONTROL CENTER ---
+    "custom/control-center": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "eww open control-center"
+    },
+
+    // --- SPEGNIMENTO ---
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "wlogout"
+    }
+}

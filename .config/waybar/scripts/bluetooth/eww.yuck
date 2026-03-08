@@ -1,0 +1,50 @@
+(defpoll bluetooth_data :interval "2s" "~/.config/waybar/scripts/bluetooth/get_bluetooth.sh")
+
+(defwidget bluetooth_layout []
+    (eventbox :onhoverlost "eww -c ~/.config/waybar/scripts/bluetooth close bluetoothmenu"
+        (box :orientation "v" :class "menu-box" :space-evenly false
+            
+            ;; Header
+            (box :orientation "h" :class "wifi-header" :space-evenly false
+                (label :class "wifi-icon" :text {bluetooth_data.icon})
+                (label :class "wifi-ssid" :limit-width 18 :text {bluetooth_data.name})
+                (button :class "toggle-btn" 
+                        :onclick "bluetoothctl power ${bluetooth_data.status == 'enabled' ? 'off' : 'on'}"
+                        {bluetooth_data.status == "enabled" ? "Spegni" : "Accendi"})
+            )
+            
+            (box :class "separator")
+            
+            ;; Lista Dispositivi
+            (box :orientation "v" :space-evenly false :class "networks-box"
+                (for dev in {bluetooth_data.devices}
+                    (button :class {dev.connected ? "net-btn connected" : "net-btn"}
+                            ;; Se è connesso lo disconnette, altrimenti lo connette
+                            :onclick "bluetoothctl ${dev.connected ? 'disconnect' : 'connect'} ${dev.mac} & eww -c ~/.config/waybar/scripts/bluetooth close bluetoothmenu"
+                        (label :xalign 0 :limit-width 25 :text {dev.connected ? "󰂱   ${dev.name}" : "󰂯   ${dev.name}"})
+                    )
+                )
+            )
+            
+            (box :class "separator")
+            
+            ;; Pulsante Impostazioni 
+            ;; (Uso blueman-manager se hai un'interfaccia grafica, o bluetoothctl nel terminale)
+            (button :class "menu-btn" 
+                    :onclick "python3 ~/Documenti/impostazioni/main.py bluetooth & eww -c ~/.config/waybar/scripts/bluetooth close sysmenu"
+                (label :xalign 0 :text "󰂯  Impostazioni Bluetooth"))
+        )
+    )
+)
+
+(defwindow bluetoothmenu
+    :monitor 0
+    :geometry (geometry :x "10px" 
+                        :y "10px" 
+                        :width "300px" 
+                        :anchor "top right")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    (bluetooth_layout)
+)

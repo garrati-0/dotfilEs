@@ -1,0 +1,140 @@
+/* --- TOKYO NIGHT PALETTE --- */
+@define-color bg        #1a1b26;
+@define-color fg        #c0caf5;
+@define-color blue      #7aa2f7;
+@define-color purple    #bb9af7;
+@define-color green     #9ece6a;
+@define-color red       #f7768e;
+@define-color dark_g    #24283b;
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 11px;
+    min-height: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+window#waybar {
+    background: transparent;
+    color: @fg;
+}
+
+tooltip {
+    background: @bg;
+    border: 1px solid @blue;
+    border-radius: 8px;
+}
+
+/* --- IMMAGINE PROFILO --- */
+#custom-menu {
+    background-image: url("face.png"); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;          
+    min-width: 20px;                 
+    min-height: 20px;                
+    border-radius: 99px;             
+    border: 2px solid @blue;         
+    color: transparent;              
+    font-size: 0px;                  
+    padding: 2px;
+    margin-right: 10px;
+    transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+}
+
+#custom-menu:hover {
+    background-size: 20px;             
+    background-position: 10px center; 
+    color: @bg;                       
+    font-size: 14px;
+    background-color: @blue;          
+    padding-left: 40px;               
+    padding-right: 15px;              
+    min-width: 60px;
+}
+
+/* --- WORKSPACES --- */
+#workspaces {
+    background: @dark_g;
+    padding: 2px 4px;
+    border-radius: 12px;
+}
+
+#workspaces button {
+    padding: 0 4px;
+    color: @fg;
+    font-size: 10px;
+    transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+    color: @bg;
+    background: @purple;
+    border-radius: 10px;
+    padding: 0 10px;
+    margin: 1px 0;
+    min-width: 20px;
+}
+
+#workspaces button:hover {
+    color: @blue;
+    background: @bg;
+}
+
+/* --- OROLOGIO CENTRALE --- */
+#clock {
+    background: @dark_g;
+    color: @fg;
+    padding: 0 10px;
+    border-radius: 12px;
+}
+
+/* --- MODULI DESTRA (TUTTE LE ISOLE) --- */
+#cpu, #memory, #pulseaudio, #network, #bluetooth, #battery, #custom-control-center {
+    background: @dark_g;
+    padding: 0 10px;
+    margin-right: 6px;
+    border-radius: 12px;
+}
+
+/* Colori specifici per ogni isola */
+#cpu { color: @blue; }
+#memory { color: @purple; }
+#pulseaudio { color: @fg; }
+#network { color: @blue; }
+#bluetooth { color: @green; }
+#battery { color: @fg; }
+
+#battery.charging { color: @green; }
+#battery.warning:not(.charging) { color: @red; }
+
+/* --- CONTROL CENTER --- */
+#custom-control-center {
+    color: @purple;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#custom-control-center:hover {
+    background: @purple;
+    color: @bg;
+}
+
+/* --- PULSANTE SPEGNIMENTO --- */
+#custom-power {
+    background: @dark_g;
+    color: @red;
+    padding: 0 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+#custom-power:hover {
+    background: @red;
+    color: @bg;
+}

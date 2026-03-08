@@ -1,0 +1,71 @@
+* {
+    font-family: "JetBrainsMono Nerd Font", "Segoe UI", sans-serif;
+    background-image: none;
+    transition: all 0.3s ease-in-out; /* Transizioni morbide per tutti gli effetti */
+}
+
+window {
+    background-color: rgba(26, 27, 38, 0.85); /* Sfondo scuro e profondo */
+}
+
+button {
+    color: #a9b1d6; /* Testo grigio-azzurro a riposo */
+    background-color: #24283b; /* Sfondo dei quadrati */
+    border: 2px solid #292e42; /* Bordo sottile e scuro */
+    border-radius: 24px; /* Angoli molto arrotondati, stile moderno */
+    margin: 25px; /* Distanza ampia per separare i quadrati */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Effetto fluttuante (ombra) */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+}
+
+button:focus, button:active {
+    outline: none; /* Rimuove i fastidiosi contorni di default di Linux */
+}
+
+/* --- EFFETTI NEON INDIVIDUALI ALL'HOVER --- */
+
+#lock:hover {
+    border-color: #7dcfff; /* Ciano */
+    color: #7dcfff;
+    box-shadow: 0 0 20px rgba(125, 207, 255, 0.3); /* Alone luminoso */
+}
+
+#logout:hover {
+    border-color: #9ece6a; /* Verde */
+    color: #9ece6a;
+    box-shadow: 0 0 20px rgba(158, 206, 106, 0.3);
+}
+
+#suspend:hover {
+    border-color: #bb9af7; /* Viola */
+    color: #bb9af7;
+    box-shadow: 0 0 20px rgba(187, 154, 247, 0.3);
+}
+
+#hibernate:hover {
+    border-color: #ff9e64; /* Arancione */
+    color: #ff9e64;
+    box-shadow: 0 0 20px rgba(255, 158, 100, 0.3);
+}
+
+#reboot:hover {
+    border-color: #7aa2f7; /* Blu */
+    color: #7aa2f7;
+    box-shadow: 0 0 20px rgba(122, 162, 247, 0.3);
+}
+
+#shutdown:hover {
+    border-color: #f7768e; /* Rosso/Magenta */
+    color: #f7768e;
+    box-shadow: 0 0 20px rgba(247, 118, 142, 0.3);
+}
+
+/* --- ICONE --- */
+#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
+#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
+#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")); }
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }
+#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }

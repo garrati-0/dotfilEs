@@ -1,0 +1,66 @@
+(defpoll current_day :interval "1h" "date '+%d'")
+(defpoll current_month :interval "1h" "date '+%B' | sed 's/^./\\U&/'")
+(defpoll current_weekday :interval "1h" "date '+%A' | sed 's/^./\\U&/'")
+(defpoll current_year :interval "1h" "date '+%Y'")
+
+(defvar agenda_events '[{"time":"10:00", "title":"Riunione team", "icon":"💼"}, {"time":"13:00", "title":"Pranzo con cliente", "icon":"🍝"}, {"time":"18:30", "title":"Allenamento", "icon":"🏋️"}]')
+
+(defwidget cal_layout []
+    (eventbox :onhoverlost "eww -c ~/.config/waybar/scripts/calendar close calendar_window"
+        (box :orientation "h" :class "dashboard-bg" :space-evenly false
+            
+            ;; PANNELLO SINISTRO (Data + Eventi)
+            (box :orientation "v" :class "left-panel" :space-evenly false
+                
+                ;; Header Data
+                (box :orientation "h" :class "date-header" :space-evenly false :valign "start"
+                    (label :class "date-day" :text current_day)
+                    (box :orientation "v" :class "date-details" :space-evenly false :valign "center"
+                        (label :class "date-weekday" :xalign 0 :text current_weekday)
+                        (label :class "date-month" :xalign 0 :text "${current_month} ${current_year}")
+                    )
+                )
+
+                (box :class "h-separator")
+
+                ;; Lista Eventi
+                (label :class "events-title" :xalign 0 :text "PROSSIMI IMPEGNI")
+                (scroll :vscroll true :hscroll false :class "events-scroll"
+                    (box :orientation "v" :space-evenly false :class "events-list"
+                        (for ev in agenda_events
+                            (box :orientation "h" :class "event-item" :space-evenly false
+                                (label :class "event-icon" :text "${ev.icon}")
+                                (box :orientation "v" :space-evenly false :valign "center"
+                                    (label :class "event-name" :xalign 0 :limit-width 22 :text "${ev.title}")
+                                    (label :class "event-time" :xalign 0 :text "${ev.time}")
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+
+            ;; SEPARATORE CENTRALE
+            (box :class "v-separator")
+
+            ;; PANNELLO DESTRO (Calendario)
+            (box :class "right-panel" :hexpand true :vexpand true :valign "center"
+                (calendar :class "my-calendar" 
+                          :show-details false 
+                          :show-heading true 
+                          :show-day-names true
+                          :hexpand true
+                          :vexpand true)
+            )
+        )
+    )
+)
+
+(defwindow calendar_window
+    :monitor 0
+    :geometry (geometry :x "10px" :y "10px" :width "680px" :height "380px" :anchor "top right")
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    (cal_layout)
+)

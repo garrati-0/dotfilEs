@@ -1,0 +1,51 @@
+window {
+    background-color: transparent;
+}
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+.menu-box {
+    background-color: rgba(26, 27, 38, 0.95); 
+    border-radius: 20px; 
+    padding: 10px; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-btn {
+    font-size: 14px;
+    font-weight: bold;
+    color: #c0caf5;
+    padding: 10px 14px; 
+    margin: 2px 0px; 
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-btn:hover {
+    background-color: rgba(41, 46, 66, 0.8); 
+    color: #7dcfff;
+}
+
+.separator {
+    background-color: rgba(41, 46, 66, 0.5);
+    min-height: 1px; 
+    margin: 8px 4px; 
+}
+
+.btn-logout:hover { 
+    color: #e0af68;
+    background-color: rgba(41, 46, 66, 0.8); 
+}
+
+.btn-reboot:hover { 
+    color: #bb9af7;
+    background-color: rgba(41, 46, 66, 0.8); 
+}
+
+.btn-power:hover  { 
+    color: #f7768e;
+    background-color: rgba(41, 46, 66, 0.8); 
+}

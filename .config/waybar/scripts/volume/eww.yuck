@@ -1,0 +1,40 @@
+(defpoll volume :initial "0" :interval "100ms" "pamixer --get-volume")
+(defpoll sinks :initial "[]" :interval "1s" "~/.config/waybar/scripts/volume/scripts/get_sinks.sh")
+
+(defwindow audiomenu
+    :monitor 0
+    :geometry (geometry :x "1150px"
+                        :y "15px"
+                        :width "280px"
+                        :anchor "top left")
+    :stacking "overlay"
+    :exclusive false
+    :namespace "sysmenu"
+    (audio_layout))
+
+(defwidget audio_layout []
+    ;; L'eventbox rileva quando il mouse esce dall'area
+    (eventbox :onhoverlost "eww -c ~/.config/waybar/scripts/volume close audiomenu"
+        (box :orientation "v" :class "menu-box" :space-evenly false
+            (box :orientation "h" :class "slider-box" :space-evenly false
+                (label :class "vol-icon" :text " ")
+                (scale :class "vol-slider"
+                       :value volume
+                       :min 0
+                       :max 101
+                       :onchange "pamixer --set-volume {}")
+            )
+            
+            (box :class "separator")
+            
+            (box :orientation "v" :space-evenly false
+                (for sink in sinks
+                    (button :class {sink.is_default ? "menu-btn active-sink" : "menu-btn"}
+                            :onclick "pactl set-default-sink ${sink.id} & eww -c ~/.config/waybar/scripts/volume close audiomenu"
+                        (label :xalign 0 :limit-width 22 :text "${sink.name}")
+                    )
+                )
+            )
+        )
+    )
+)

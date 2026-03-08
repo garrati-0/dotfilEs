@@ -1,0 +1,485 @@
+$bg: #1a1b2e;
+$surface: #1a1a2e;
+$border: #292b4a;
+$muted: #414868;
+$dim: #565f89;
+$text: #c0caf5;
+$subtext: #a9b1d6;
+
+$blue: #7aa2f7;
+$purple: #bb9af7;
+$cyan: #7dcfff;
+$green: #9ece6a;
+$orange: #e0af68;
+$red: #f7768e;
+
+$accents: (
+  "blue": $blue,
+  "purple": $purple,
+  "cyan": $cyan,
+  "green": $green,
+  "orange": $orange,
+  "red": $red,
+);
+
+@mixin accent-variants($property) {
+  @each $name, $color in $accents {
+    &-#{$name} {
+      #{$property}: $color;
+    }
+  }
+}
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+  font-size: 13px;
+  color: $text;
+}
+
+.cc-root {
+  background: transparent;
+  padding: 4px 0;
+}
+
+.card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 0 0 0 0;
+}
+
+.clock-time {
+  font-size: 38px;
+  font-weight: 300;
+  color: $text;
+  letter-spacing: -1px;
+}
+
+.clock-date {
+  font-size: 11px;
+  color: $dim;
+  margin-top: 3px;
+}
+
+.net-badge {
+  background: rgba($blue, 0.1);
+  border: 1px solid rgba($blue, 0.25);
+  border-radius: 99px;
+  padding: 5px 10px;
+}
+
+.net-label {
+  font-size: 10px;
+  color: $blue;
+}
+
+.pill {
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 10px 6px;
+  transition: 200ms ease;
+
+  .pill-icon {
+    font-size: 18px;
+    color: $dim;
+  }
+
+  .pill-label {
+    font-size: 10px;
+    color: $dim;
+    letter-spacing: 0.03em;
+  }
+
+  &:hover {
+    background: rgba(white, 0.04);
+    border-color: $muted;
+  }
+}
+
+@each $name, $color in $accents {
+  .pill-#{$name}.pill-on {
+    background: rgba($color, 0.12);
+    border-color: rgba($color, 0.35);
+
+    .pill-icon,
+    .pill-label {
+      color: $color;
+    }
+  }
+}
+
+.slider-icon {
+  font-size: 15px;
+  min-width: 16px;
+  @include accent-variants(color);
+}
+
+.slider-val {
+  font-size: 10px;
+  color: $dim;
+  min-width: 36px;
+}
+
+scale {
+  &.slider {
+    trough {
+      background: $border;
+      border-radius: 99px;
+      min-height: 14px;
+      min-width: 10px;
+    }
+
+    highlight,
+    progress {
+      border-radius: 99px;
+      min-height: 14px;
+    }
+
+    slider {
+      background: white;
+      border-radius: 99px;
+      min-width: 14px;
+      min-height: 14px;
+      box-shadow: 0 0 0 2px $bg;
+    }
+  }
+}
+
+@each $name, $color in $accents {
+  .slider-#{$name} {
+
+    highlight,
+    progress {
+      background: $color;
+    }
+
+    slider {
+      box-shadow: 0 0 6px rgba($color, 0.5), 0 0 0 2px $bg;
+    }
+  }
+}
+
+.slider-progress {
+  slider {
+    min-width: 0;
+    min-height: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  highlight,
+  progress {
+    background: $purple;
+  }
+
+  trough {
+    min-height: 2px;
+  }
+}
+
+.player-card {
+  border-color: rgba($purple, 0.3);
+}
+
+.player-art-box {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 10px;
+  background: rgba($purple, 0.12);
+  border: 1px solid rgba($purple, 0.25);
+  background-size: cover;
+  background-position: center;
+  padding: 4px;
+}
+
+.player-art-icon {
+  font-size: 24px;
+  color: $purple;
+}
+
+.player-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: $text;
+}
+
+.player-artist {
+  font-size: 10px;
+  color: $dim;
+  margin-top: 2px;
+}
+
+.player-like {
+  font-size: 16px;
+  color: $muted;
+  border-radius: 6px;
+  padding: 4px;
+  transition: 200ms;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.player-btn {
+  font-size: 15px;
+  color: $dim;
+  transition: 200ms;
+  border-radius: 6px;
+  padding: 2px 4px;
+
+  &:hover {
+    color: $text;
+  }
+}
+
+.player-play {
+  font-size: 17px;
+  background: $purple;
+  color: $bg;
+  border-radius: 99px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 6px;
+  transition: 200ms;
+  box-shadow: 0 2px 10px rgba($purple, 0.35);
+
+  &:hover {
+    background: mix($purple, white, 85%);
+    box-shadow: 0 4px 16px rgba($purple, 0.5);
+  }
+
+  &.playing {
+    background: $cyan;
+    box-shadow: 0 2px 10px rgba($cyan, 0.35);
+
+    label {
+      color: $bg;
+    }
+
+    &:hover {
+      background: mix($cyan, white, 85%);
+    }
+  }
+}
+
+circular-progress {
+  &.ring {
+    min-width: 46px;
+    min-height: 46px;
+    font-size: 10px;
+    background: transparent;
+    border-radius: 99px;
+  }
+}
+
+@each $name, $color in $accents {
+  .ring-#{$name} {
+    color: $color;
+  }
+}
+
+.ring-val {
+  font-size: 10px;
+  font-weight: 500;
+  color: $text;
+}
+
+.ring-label {
+  font-size: 9px;
+  color: $dim;
+  letter-spacing: 0.06em;
+}
+
+.footer-card {
+  padding: 9px 16px;
+}
+
+.avatar {
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 99px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba($blue, 0.5);
+}
+
+.user-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: $text;
+}
+
+.user-system {
+  font-size: 9px;
+  color: $dim;
+  margin-top: 1px;
+}
+
+.footer-btn {
+  font-size: 15px;
+  color: $dim;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 8px;
+  border: 1px solid $border;
+  padding: 4px 6px;
+  transition: 200ms;
+
+  &:hover {
+    background: $border;
+    border-color: $muted;
+    color: $text;
+  }
+
+  &-red {
+    color: $red;
+
+    &:hover {
+      background: rgba($red, 0.12);
+      border-color: rgba($red, 0.35);
+    }
+  }
+}
+
+.d20-badge {
+  background: rgba($purple, 0.1);
+  border: 1px solid rgba($purple, 0.25);
+  border-radius: 6px;
+  padding: 5px 12px;
+  transition: 200ms ease;
+  min-width: 24px;
+  min-height: 24px;
+
+  &:hover {
+    background: rgba($purple, 0.2);
+    border-color: rgba($purple, 0.4);
+  }
+}
+
+.d20-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: $purple;
+}
+
+.todo-card {
+  padding: 12px 16px;
+  border-color: rgba($blue, 0.3);
+}
+
+.todo-header-btn {
+  border-radius: 8px;
+  padding: 4px;
+  transition: 200ms ease;
+
+  &:hover {
+    background: rgba(white, 0.05);
+  }
+}
+
+.todo-title-icon {
+  font-size: 16px;
+}
+
+.todo-toggle-icon {
+  font-size: 16px;
+  color: $dim;
+}
+
+.todo-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: $text;
+}
+
+.todo-input {
+  background: rgba(white, 0.03);
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: $text;
+  transition: 200ms ease;
+  min-height: 24px;
+
+  &:focus {
+    border-color: $blue;
+    background: rgba($blue, 0.05);
+  }
+}
+
+.todo-list {
+  margin: 4px 0;
+}
+
+.todo-item {
+  background: rgba(white, 0.02);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.todo-text {
+  font-size: 11px;
+  color: $text;
+}
+
+.todo-del {
+  font-size: 14px;
+  color: $muted;
+  transition: 200ms;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.todo-empty {
+  font-size: 11px;
+  color: $dim;
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.todo-add-btn {
+  background: rgba($purple, 0.15);
+  border: 1px solid rgba($purple, 0.3);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: $purple;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 200ms ease;
+  min-height: 24px;
+
+  &:hover {
+    background: rgba($purple, 0.25);
+    border-color: rgba($purple, 0.5);
+  }
+}
+
+.todo-popup-box {
+  background: $surface;
+  border: 1px solid $blue;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.todo-input-large {
+  background: rgba(white, 0.05);
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: $text;
+  transition: 200ms ease;
+  min-height: 36px;
+
+  &:focus {
+    border-color: $blue;
+    background: rgba($blue, 0.1);
+  }
+}

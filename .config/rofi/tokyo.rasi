@@ -1,0 +1,29 @@
+* {
+  /* Tokyo Night Storm — Base */
+  bg0     : #1a1b26;
+  bg1     : #1f2335;
+  bg2     : #24283b;
+  bg3     : #414868;
+  bg4     : #292e42;
+
+  /* Foreground */
+  fg0     : #c0caf5;
+  fg1     : #a9b1d6;
+  fg2     : #737aa2;
+  fg3     : #565f89;
+
+  /* Accents */
+  red     : #f7768e;
+  green   : #9ece6a;
+  yellow  : #e0af68;
+  blue    : #7aa2f7;
+  magenta : #bb9af7;
+  cyan    : #7dcfff;
+  teal    : #73daca;
+  orange  : #ff9e64;
+
+  /* Semantic */
+  accent  : @blue;
+  urgent  : @red;
+  select  : #283457;
+}

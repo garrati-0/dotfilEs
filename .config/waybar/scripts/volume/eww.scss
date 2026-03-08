@@ -1,0 +1,87 @@
+window {
+    background-color: transparent;
+}
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+.menu-box {
+    background-color: rgba(26, 27, 38, 0.95); 
+    border-radius: 20px; 
+    padding: 16px; 
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.menu-btn {
+    font-size: 14px;
+    font-weight: bold;
+    color: #c0caf5;
+    padding: 12px 16px; 
+    margin: 4px 0px; 
+    border-radius: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-btn:hover {
+    background-color: rgba(41, 46, 66, 0.7); 
+    color: #7dcfff;
+}
+
+.separator {
+    background-color: rgba(41, 46, 66, 0.4);
+    min-height: 2px; 
+    border-radius: 2px;
+    margin: 12px 6px; 
+}
+
+.btn-logout:hover { 
+    color: #e0af68;
+    background-color: rgba(41, 46, 66, 0.7); 
+}
+
+.btn-reboot:hover { 
+    color: #bb9af7;
+    background-color: rgba(41, 46, 66, 0.7); 
+}
+
+.btn-power:hover  { 
+    color: #f7768e;
+    background-color: rgba(41, 46, 66, 0.7); 
+}
+
+.slider-box {
+    padding: 16px 8px;
+}
+
+.vol-icon {
+    font-size: 20px;
+    color: #7aa2f7;
+    margin-right: 16px;
+}
+
+scale trough {
+    background-color: rgba(36, 40, 59, 0.6);
+    border-radius: 12px;
+    min-height: 10px;
+    min-width: 220px;
+}
+
+scale highlight {
+    background-color: #7aa2f7;
+    border-radius: 12px;
+}
+
+scale slider {
+    all: unset;
+}
+
+.active-sink {
+    color: #1a1b26;
+    background-color: rgba(122, 162, 247, 0.9);
+}
+
+eventbox {
+    background-color: transparent;
+}
