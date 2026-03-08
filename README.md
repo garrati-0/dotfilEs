@@ -83,11 +83,6 @@ Il ricing non finisce mai! Ecco cosa ho in programma di implementare prossimamen
 * [ ] **Clipboard History:** Creare un widget o un menu in Rofi per gestire la cronologia degli appunti.
 * [ ] **Espansione dell'App Python:** Aggiungere nuove schede e funzionalità alla mia app di impostazioni (es. gestione temi, gestione display, ecc.).
 
-Certo! Aggiungiamo una sezione dedicata all'installazione che sia chiara e dritta al punto. Non c'è bisogno di scrivere un manuale, basta indicare i mattoni fondamentali per far funzionare i tuoi script e widget (come NetworkManager e BlueZ) e mostrare i comandi base per applicare i file.
-
-Ecco come puoi integrare la sezione nel tuo `README.md` (puoi inserirla subito dopo la sezione "Tecnologie e Programmi Utilizzati" o alla fine, prima del "To-Do"):
-
----
 
 ## 📦 Installazione
 
