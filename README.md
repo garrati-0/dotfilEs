@@ -8,17 +8,34 @@ Ho dedicato molto tempo alla creazione di widget personalizzati per avere tutto 
 
 ### Desktop & Workflow
 
+![Desktop](assets/scatto.png)
+![Lockscreen](assets/scatto_lockscreen.png)
+![Workflow Setup](assets/2026-03-06_213418.png)
+
 ### Control Center & Widget personalizzati
 
 Il cuore del setup. Un control center completo e menu rapidi per gestire il sistema.
 
+![Control Center](assets/2026-03-06_213426.png)
+![Menu Rapidi](assets/2026-03-06_213556.png)
+
 ### Gestione Rete, Bluetooth e Audio
+
+![Gestione Rete](assets/2026-03-06_213528.png)
+![Gestione Bluetooth](assets/2026-03-06_213535.png)
+![Gestione Audio](assets/2026-03-06_213445.png)
 
 ### App Impostazioni Custom (Python)
 
 Un'interfaccia grafica creata da me per gestire le impostazioni principali.
 
+![Impostazioni Rete](assets/2026-03-06_214116.png)
+![Impostazioni Bluetooth](assets/2026-03-06_214122.png)
+![Impostazioni Aspetto](assets/2026-03-06_214127.png)
+
 ### Power Menu
+
+![Power Menu](assets/2026-03-06_213434.png)
 
 ---
 
