@@ -1,0 +1,235 @@
+;; ╭─────────────────────────────────────────╮
+;; │  Tokyo Night — EWW Control Center       │
+;; ╰─────────────────────────────────────────╯
+
+;; ── Variables ─────────────────────────────────────────
+
+(defpoll clock-time   :interval "1s"   :initial "00:00" "date '+%H:%M'")
+(defpoll clock-date   :interval "60s"  :initial "Lunedì" "date '+%a, %d %b'")
+(defpoll cpu-usage    :interval "3s"   :initial "0"  "scripts/cpu.sh")
+(defpoll ram-usage    :interval "5s"   :initial "0"  "scripts/ram.sh")
+(defpoll battery-val  :interval "30s"  :initial "85" "cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 85")
+(defpoll battery-stat :interval "30s"  :initial "Discharging" "cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo 'Discharging'")
+(defpoll vol-val      :interval "1s"   :initial "0"  "scripts/volume.sh get")
+(defpoll bright-val   :interval "2s"   :initial "0"  "scripts/brightness.sh get")
+(defpoll mpris-title  :interval "2s"   :initial "Nothing playing" "playerctl metadata title  2>/dev/null | cut -c1-28 || echo 'Nothing playing'")
+(defpoll mpris-artist :interval "2s"   :initial "" "playerctl metadata artist 2>/dev/null | cut -c1-22 || echo ''")
+(defpoll mpris-status :interval "1s"   :initial "Stopped" "playerctl status 2>/dev/null || echo 'Stopped'")
+(defpoll mpris-pos    :interval "1s"   :initial "0"  "scripts/mpris_pos.sh")
+(defpoll mpris-time   :interval "1s"   :initial "" "scripts/mpris_time.sh")
+(defpoll mpris-art    :interval "2s"   :initial "" "scripts/get_cover.sh")
+(defpoll net-ssid     :interval "10s"  :initial "Offline" "iwgetid -r 2>/dev/null || nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2 || echo 'Offline'")
+(defpoll distro-name  :interval "999s" :initial "Linux" "grep '^NAME' /etc/os-release | cut -d= -f2 | tr -d '\"'")
+(defpoll username     :interval "999s" :initial "user" "whoami")
+
+(defpoll sys-uptime   :interval "60s"  :initial "0m" "scripts/uptime.sh")
+(defpoll gpu-usage    :interval "3s"   :initial "0"  "scripts/gpu.sh")
+
+(defpoll wifi-on  :interval "3s" :initial "false" "scripts/wifi.sh status")
+(defpoll bt-on    :interval "3s" :initial "false" "scripts/bt.sh status")
+(defpoll night-on :interval "3s" :initial "false" "scripts/nightmode.sh status")
+(defpoll dnd-on   :interval "3s" :initial "false" "scripts/dnd.sh status")
+(defpoll airplane-on :interval "3s" :initial "false" "scripts/airplane.sh status")
+(defpoll todo-list :interval "2s" :initial "" "scripts/todo.sh get")
+
+(defvar d20-val "󰐚")
+(defvar show-todo false)
+(defvar todo-input-val "")
+
+
+;; ── Window ────────────────────────────────────────────
+
+(defwindow control-center
+  :monitor 0
+  :geometry (geometry
+    :x "10px" :y "10px"
+    :width  "260px"
+    :height "98%"
+    :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  (cc-root))
+
+
+;; ── Root ──────────────────────────────────────────────
+
+(defwidget cc-root []
+  (eventbox :onhoverlost "scripts/close_cc.sh &"
+    (box :class "cc-root" :orientation "v" :spacing 8 :space-evenly false
+      (cc-top-section)
+      (cc-sliders)
+      (cc-player)
+      (cc-system)
+      (cc-todo)
+      (cc-footer))))
+
+(defwidget cc-top-section []
+  (box :class "card top-section" :orientation "v" :spacing 10 :space-evenly false
+    (cc-header)
+    (cc-toggles)
+  ))
+
+;; ── Header ─────────────────────────────────────────────
+
+(defwidget cc-header []
+  (box :class "header-box" :orientation "h" :space-evenly false :spacing 0
+    (box :orientation "v" :space-evenly false :hexpand true
+      (label :class "clock-time" :halign "start" :text clock-time)
+      (label :class "clock-date" :halign "start" :text clock-date))
+    (button :class "d20-badge" :onclick "eww update d20-val=$(shuf -i 1-20 -n 1) &"
+      (label :class "d20-label" :text d20-val))))
+
+
+;; ── Toggles ───────────────────────────────────────────
+
+(defwidget cc-toggles []
+  (box :class "toggles-grid" :orientation "v" :spacing 8 :space-evenly false
+    (box :orientation "h" :spacing 8 :space-evenly true
+      (toggle-pill :label "Wi-Fi" :desc {wifi-on == "true" ? net-ssid : "Spento"} :icon "󰤨" :active {wifi-on == "true"}  :accent "blue"
+                   :on-click "scripts/wifi.sh toggle &")
+      (toggle-pill :label "Bluetooth" :desc {bt-on == "true" ? "Attivo" : "Spento"} :icon "󰂯" :active {bt-on == "true"}    :accent "purple"
+                   :on-click "scripts/bt.sh toggle &"))
+    (box :orientation "h" :spacing 8 :space-evenly true
+      (toggle-square :label "DND"   :icon "󰂛" :active {dnd-on == "true"}   :accent "red" :on-click "scripts/dnd.sh toggle &")
+      (toggle-square :label "Notte" :icon "󰖔" :active {night-on == "true"} :accent "orange" :on-click "scripts/nightmode.sh toggle &")
+      (toggle-square :label "Aereo" :icon "" :active {airplane-on == "true"} :accent "purple" :on-click "scripts/airplane.sh toggle &"))))
+
+(defwidget toggle-pill [label desc icon active accent on-click]
+  (button
+    :class {active ? "md-pill md-pill-active md-pill-${accent}" : "md-pill"}
+    :onclick on-click
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "md-pill-icon" :text icon)
+      (box :orientation "v" :space-evenly false :valign "center"
+        (label :class "md-pill-label" :halign "start" :text label)
+        (label :class "md-pill-desc" :halign "start" :text desc :limit-width 10)))))
+
+(defwidget toggle-square [label icon active accent on-click]
+  (button
+    :class {active ? "md-square md-pill-active md-pill-${accent}" : "md-square"}
+    :onclick on-click
+    :tooltip label
+    (box :orientation "v" :space-evenly false :spacing 0 :valign "center" :halign "center"
+      (label :class "md-square-icon" :text icon))))
+
+
+;; ── Sliders ───────────────────────────────────────────
+
+(defwidget cc-sliders []
+  (box :class "card sliders-card" :orientation "v" :space-evenly false :spacing 10
+    (slider-row :icon "󰕾" :value vol-val    :accent "blue"   :on-change "scripts/volume.sh set {} &")
+    (slider-row :icon "󰃟" :value bright-val :accent "orange" :on-change "scripts/brightness.sh set {} &")))
+
+(defwidget slider-row [icon value accent on-change]
+  (box :orientation "h" :space-evenly false :spacing 10 :valign "center"
+    (label :class "slider-icon ${accent}" :text icon)
+    (scale
+      :class "md-slider md-slider-${accent}"
+      :min 0 :max 101
+      :value {value == "" ? 0 : value}
+      :hexpand true
+      :onchange on-change)
+    (label :class "slider-val" :text "${value}%" :width 32 :halign "end")))
+
+
+;; ── Media Player ──────────────────────────────────────
+
+(defwidget cc-player []
+  (box :class "card player-card" :orientation "v" :space-evenly false :spacing 10
+       :style {mpris-art != "" ? "background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('${mpris-art}');" : ""}
+    (box :orientation "h" :space-evenly false :spacing 10 :valign "center"
+      (box :orientation "v" :space-evenly false :hexpand true :valign "center"
+        (label :class "player-title"  :halign "start" :limit-width 20 :text {mpris-title == "" ? "Nessun multimedia" : mpris-title})
+        (label :class "player-artist" :halign "start" :limit-width 16 :text mpris-artist))
+      (button :class "player-like" :onclick "playerctl shuffle toggle 2>/dev/null &"
+        (label :text "󰋼")))
+    (box :orientation "h" :space-evenly false :spacing 6 :valign "center"
+      (scale
+        :class "slider-progress"
+        :min 0 :max 100
+        :value {mpris-pos == "" ? 0 : mpris-pos}
+        :hexpand true
+        :onchange "scripts/mpris_seek.sh {} &")
+      (label :class "player-time" :text mpris-time :halign "end"))
+    (box :orientation "h" :space-evenly false :halign "center" :spacing 16 :valign "center"
+      (button :class "player-btn" :onclick "playerctl previous &" (label :text "󰒮"))
+      (button
+        :class {mpris-status == "Playing" ? "player-play playing" : "player-play"}
+        :onclick "playerctl play-pause & eww update mpris-status=$(playerctl status) &"
+        (label :text {mpris-status == "Playing" ? "󰏤" : "󰐊"}))
+      (button :class "player-btn" :onclick "playerctl next &" (label :text "󰒭")))))
+
+
+;; ── System ────────────────────────────────────────────
+
+(defwidget cc-system []
+  (box :class "card" :orientation "h" :space-evenly true
+    (sys-ring :label "CPU" :value cpu-usage :accent "blue")
+    (sys-ring :label "RAM" :value ram-usage :accent "purple")
+    (sys-ring :label "GPU" :value gpu-usage :accent "cyan")
+    (sys-ring :label "BAT" :value battery-val
+              :accent {battery-stat == "Charging" ? "green" : "orange"})))
+
+(defwidget sys-ring [label value accent]
+  (box :orientation "v" :space-evenly false :spacing 4 :halign "center"
+    (circular-progress
+      :class "ring ring-${accent}"
+      :value {value == "" ? 0 : value}
+      :thickness 4
+      :start-at 75)
+    (box :orientation "v" :space-evenly false :spacing 0
+      (label :class "ring-val" :text "${value}%")
+      (label :class "ring-label" :text label))))
+
+
+;; ── Todo List ─────────────────────────────────────────
+
+(defwidget cc-todo []
+  (box :class "card todo-card" :orientation "v" :space-evenly false :spacing 8
+    (button :onclick "eww update show-todo=${!show-todo}" :class "todo-header-btn"
+      (box :orientation "h" :space-evenly false :spacing 8 :valign "center"
+        (label :class "todo-title-icon ${night-on == 'true' ? 'orange' : 'blue'}" :text "󰄲")
+        (label :class "todo-title" :text "Task" :hexpand true :halign "start")
+        (label :class "todo-toggle-icon" :text {show-todo ? "󰅂" : "󰅀"})))
+    (revealer :transition "slideup" :reveal show-todo :duration "300ms"
+      (box :orientation "v" :space-evenly false :spacing 6
+        (box :class "todo-container" :height 150
+          (scroll :vscroll true :hscroll false
+            (literal :content todo-list)))
+        (button :class "todo-add-btn" :halign "end" :onclick "eww open todo-popup" (label :text "Aggiungi 󰐕"))))
+  ))
+
+;; ── Todo Popup ────────────────────────────────────────
+
+(defwindow todo-popup
+  :monitor 0
+  :geometry (geometry
+    :x "0%" :y "0%"
+    :width  "240px"
+    :height "44px"
+    :anchor "center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (box :class "todo-popup-box" :orientation "v" :space-evenly false
+    (input :class "todo-input-large" :value ""
+           :onaccept "scripts/todo.sh add '{}' && eww close todo-popup")
+  ))
+
+;; ── Footer ────────────────────────────────────────────
+
+(defwidget cc-footer []
+  (box :class "card footer-card" :orientation "h" :space-evenly false :valign "center"
+    (box :orientation "h" :space-evenly false :spacing 8 :hexpand true :valign "center"
+      (box :class "avatar" :style "background-image: url('/home/garrati/.config/waybar/face.png');")
+      (box :orientation "v" :space-evenly false
+        (label :class "user-name"   :halign "start" :text username)
+        (label :class "user-system" :halign "start" :text "${distro-name} • up ${sys-uptime}")))
+    (box :orientation "h" :space-evenly false :spacing 4 :valign "center"
+      (button :class "footer-btn"
+              :onclick "bash -c 'env XDG_CURRENT_DESKTOP=gnome gnome-control-center &'"
+              (label :text "󰒓"))
+      (button :class "footer-btn footer-btn-red"
+              :onclick "wlogout & eww close control-center &"
+              (label :text "󰐥")))))

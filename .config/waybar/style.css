@@ -138,3 +138,36 @@ tooltip {
     background: @red;
     color: @bg;
 }
+
+#custom-camera, #custom-mic {
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+    /* Colori di base quando sono attivi */
+    color: @bg; 
+}
+/* Stato INATTIVO: Moduli invisibili ma presenti per l'animazione */
+#custom-camera.inactive, #custom-mic.inactive {
+    font-size: 0px;
+    padding: 0px;
+    margin-left: 0px;
+    background: transparent;
+    color: transparent;
+}
+
+/* Stato ATTIVO: Moduli visibili (Fotocamera = Verde come su Android) */
+#custom-camera.active {
+    font-size: 14px;
+    padding: 0 10px;
+    margin-left: 10px;
+    background: @green;
+}
+
+/* Stato ATTIVO: Moduli visibili (Microfono = Arancione/Rosso o Purple) */
+#custom-mic.active {
+    font-size: 14px;
+    padding: 0 10px;
+    margin-left: 10px;
+    background: @red; /* O @red se preferisci lo stile iOS */
+}
+
+

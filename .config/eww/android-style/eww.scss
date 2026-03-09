@@ -1,0 +1,534 @@
+$bg: transparent;
+$surface: rgba(22, 24, 34, 0.92);
+$surface-container: rgba(255, 255, 255, 0.05);
+$border: rgba(255, 255, 255, 0.1);
+$muted: rgba(255, 255, 255, 0.3);
+$dim: rgba(255, 255, 255, 0.6);
+$text: #E3E3E8;
+$subtext: #C4C7D0;
+
+$blue: #A8C7FA;
+$purple: #D0BCFF;
+$cyan: #78D9EC;
+$green: #93D588;
+$orange: #FFB4A1;
+$red: #FFB4AB;
+
+$blue-on: #0842A0;
+$purple-on: #381E72;
+$cyan-on: #00363D;
+$green-on: #00390A;
+$orange-on: #561E0F;
+$red-on: #690005;
+
+/* Tokyo Night Storm */
+$tokyonight-storm: #24283b;
+
+$accents: (
+  "blue": $blue,
+  "purple": $purple,
+  "cyan": $cyan,
+  "green": $green,
+  "orange": $orange,
+  "red": $red,
+);
+
+$accents-on: (
+  "blue": $blue-on,
+  "purple": $purple-on,
+  "cyan": $cyan-on,
+  "green": $green-on,
+  "orange": $orange-on,
+  "red": $red-on,
+);
+
+
+@mixin accent-variants($property) {
+  @each $name, $color in $accents {
+    &-#{$name} {
+      #{$property}: $color;
+    }
+  }
+}
+
+* {
+  all: unset;
+  font-family: "Google Sans", "Product Sans", "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+  font-size: 12px;
+  color: $text;
+}
+
+.cc-root {
+  background: transparent;
+  padding: 4px 4px;
+}
+
+.header-box {
+  background: transparent;
+  padding: 0 4px 6px 4px;
+}
+
+.card {
+  background: $surface;
+  border-radius: 20px;
+  padding: 12px 14px;
+  margin: 0;
+}
+
+.clock-time {
+  font-size: 32px;
+  font-weight: 500;
+  color: $text;
+  letter-spacing: -1.0px;
+}
+
+.clock-date {
+  font-size: 11px;
+  font-weight: 500;
+  color: $dim;
+  margin-top: 0px;
+}
+
+.d20-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 4px 10px;
+  transition: 200ms ease;
+  min-width: 20px;
+  min-height: 20px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.d20-label {
+  font-size: 13px;
+  font-weight: bold;
+  color: $subtext;
+}
+
+.toggles-grid {
+  padding: 0 2px;
+}
+
+.md-pill {
+  background: $surface;
+  border-radius: 20px;
+  padding: 8px 12px;
+  transition: 250ms cubic-bezier(0.2, 0, 0, 1);
+  min-height: 38px;
+
+  .md-pill-icon {
+    font-size: 18px;
+    color: $text;
+    min-width: 20px;
+  }
+
+  .md-pill-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: $text;
+  }
+
+  .md-pill-desc {
+    font-size: 10px;
+    font-weight: 500;
+    color: $dim;
+    margin-top: 0px;
+  }
+
+  &:hover {
+    background: $surface-container;
+  }
+}
+
+.md-square {
+  background: $surface;
+  border-radius: 14px;
+  padding: 8px;
+  transition: 250ms cubic-bezier(0.2, 0, 0, 1);
+  min-width: 44px;
+  min-height: 44px;
+
+  .md-square-icon {
+    font-size: 18px;
+    color: $text;
+  }
+
+  .md-square-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: $text;
+  }
+
+  &:hover {
+    background: $surface-container;
+  }
+}
+
+@each $name, $color in $accents {
+  $on-color: map-get($accents-on, $name);
+
+  .md-pill-active.md-pill-#{$name} {
+    background: $color;
+
+    .md-pill-icon,
+    .md-pill-label,
+    .md-square-icon,
+    .md-square-label,
+    .md-pill-desc {
+      color: $on-color;
+    }
+
+    .md-pill-desc {
+      opacity: 0.8;
+    }
+
+    &:hover {
+      background: mix($color, white, 85%);
+    }
+  }
+}
+
+.sliders-card {
+  border-radius: 20px;
+  padding: 12px 14px;
+}
+
+.slider-icon {
+  font-size: 16px;
+  min-width: 18px;
+  color: $text;
+}
+
+.slider-val {
+  font-size: 10px;
+  font-weight: 600;
+  color: $dim;
+  min-width: 32px;
+}
+
+scale {
+  &.md-slider {
+    trough {
+      background: $surface-container;
+      border-radius: 99px;
+      min-height: 24px;
+      min-width: 8px;
+    }
+
+    highlight,
+    progress {
+      border-radius: 99px;
+      min-height: 24px;
+    }
+
+    slider {
+      background: transparent;
+      min-width: 0;
+      min-height: 0;
+      box-shadow: none;
+    }
+  }
+}
+
+@each $name, $color in $accents {
+  .md-slider-#{$name} {
+
+    highlight,
+    progress {
+      background: $color;
+    }
+
+    trough {
+      background: rgba($color, 0.15);
+    }
+  }
+}
+
+.player-card {
+  background: $surface;
+  padding: 14px 14px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+}
+
+.player-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.player-artist {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.player-like {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 99px;
+  padding: 6px;
+  transition: 200ms;
+
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.player-time {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 50px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.slider-progress {
+  slider {
+    min-width: 0;
+    min-height: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  highlight,
+  progress {
+    background: white;
+    border-radius: 99px;
+    min-height: 4px;
+  }
+
+  trough {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 99px;
+    min-height: 4px;
+  }
+}
+
+.player-btn {
+  font-size: 16px;
+  color: white;
+  transition: 200ms;
+  border-radius: 99px;
+  padding: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.player-play {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 99px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 6px;
+  transition: 250ms cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  &.playing {
+    background: white;
+
+    label {
+      color: black;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+circular-progress {
+  &.ring {
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 10px;
+    background: transparent;
+    border-radius: 99px;
+  }
+}
+
+@each $name, $color in $accents {
+  .ring-#{$name} {
+    color: $color;
+  }
+}
+
+.ring-val {
+  font-size: 10px;
+  font-weight: 600;
+  color: $text;
+}
+
+.ring-label {
+  font-size: 8px;
+  font-weight: 500;
+  color: $dim;
+  letter-spacing: 0.04em;
+}
+
+.todo-card {
+  background: $surface;
+}
+
+.todo-header-btn {
+  border-radius: 12px;
+  padding: 4px;
+  transition: 200ms ease;
+
+  &:hover {
+    background: $surface-container;
+  }
+}
+
+.todo-title-icon {
+  font-size: 14px;
+}
+
+.todo-toggle-icon {
+  font-size: 14px;
+  color: $dim;
+}
+
+.todo-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: $text;
+}
+
+.todo-add-btn {
+  background: $surface-container;
+  border-radius: 99px;
+  padding: 4px 10px;
+  color: $text;
+  font-size: 11px;
+  font-weight: 600;
+  transition: 200ms ease;
+  min-height: 22px;
+
+  &:hover {
+    background: $border;
+  }
+}
+
+.todo-list {
+  margin: 4px 0;
+}
+
+.todo-item {
+  background: $surface-container;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.todo-text {
+  font-size: 11px;
+  color: $text;
+}
+
+.todo-del {
+  font-size: 14px;
+  color: $dim;
+  transition: 200ms;
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.todo-empty {
+  font-size: 11px;
+  color: $dim;
+  font-style: italic;
+  margin: 6px 0;
+}
+
+.todo-popup-box {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.todo-input-large {
+  background: $surface-container;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: $text;
+  min-height: 32px;
+
+  &:focus {
+    background: $border;
+  }
+}
+
+.footer-card {
+  padding: 8px 6px;
+}
+
+.avatar {
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 99px;
+  background-size: cover;
+  background-position: center;
+  border: 0;
+}
+
+.user-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: $text;
+}
+
+.user-system {
+  font-size: 9px;
+  font-weight: 500;
+  color: $dim;
+  margin-top: 0px;
+}
+
+.footer-btn {
+  font-size: 14px;
+  color: $text;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 99px;
+  background: $surface;
+  padding: 6px;
+  transition: 250ms cubic-bezier(0.2, 0, 0, 1);
+
+  &:hover {
+    background: $surface-container;
+  }
+
+  &-red {
+    background: $red;
+
+    label,
+    * {
+      color: #7A0006;
+    }
+
+    &:hover {
+      background: mix(white, $red, 20%);
+    }
+  }
+}

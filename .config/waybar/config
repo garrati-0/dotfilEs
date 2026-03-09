@@ -13,7 +13,7 @@
     "margin-right": 10,
     "margin-bottom": 0,
 
-    "modules-left": ["custom/menu", "hyprland/workspaces"],
+    "modules-left": ["custom/menu", "hyprland/workspaces", "custom/camera", "custom/mic"],
     "modules-center": ["clock"],
     "modules-right": ["cpu", "memory", "pulseaudio", "network", "bluetooth", "battery", "custom/control-center", "custom/power"],
 
@@ -33,6 +33,29 @@
             "1": [], "2": [], "3": [], "4": []
         },
         "format": ""
+    },
+
+    // --- INDICATORI PRIVACY ---
+    "custom/camera": {
+        "exec": "~/.config/waybar/scripts/check_cam.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "active": "󰄀",
+            "inactive": "󰄀"
+        }
+    },
+
+    "custom/mic": {
+        "exec": "~/.config/waybar/scripts/check_mic.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "inactive": ""
+        }
     },
 
     // --- OROLOGIO ---
@@ -70,17 +93,17 @@
     },
 
     // --- RETE (ISOLA SEPARATA) ---
-"network": {
-    "interval": 2,
-    "format-wifi": " ",
-    "format-ethernet": "󰈀 ",
-    "format-linked": "󰈀 (No IP)",
-    "format-disconnected": "󰖪 ",
-    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
-    "on-click": "eww -c ~/.config/waybar/scripts/wifi open --toggle wifimenu", 
-    "on-click-right": "mode",
-    "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>"
-},
+    "network": {
+        "interval": 2,
+        "format-wifi": " ",
+        "format-ethernet": "󰈀 ",
+        "format-linked": "󰈀 (No IP)",
+        "format-disconnected": "󰖪 ",
+        "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+        "on-click": "eww -c ~/.config/waybar/scripts/wifi open --toggle wifimenu", 
+        "on-click-right": "mode",
+        "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>"
+    },
 
     // --- BLUETOOTH (ISOLA SEPARATA) ---
     "bluetooth": {
@@ -92,10 +115,11 @@
     },
 
     // --- BATTERIA (ISOLA SEPARATA) ---
+// --- BATTERIA (ISOLA SEPARATA) ---
     "battery": {
         "states": { "good": 95, "warning": 30, "critical": 15 },
         "format": "{icon}  {capacity}%",
-        "format-alt": "󰔟 {time}",
+        "format-alt": "󱐋 {power} W",
         "format-charging": "  {capacity}%",
         "format-plugged": "  {capacity}%",
         "format-icons": ["", "", "", "", ""],

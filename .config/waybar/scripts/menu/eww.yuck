@@ -19,7 +19,7 @@
                 (label :xalign 0 :text "  Launcher"))
             (button :class "menu-btn" :onclick "kitty -e btm & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
                 (label :xalign 0 :text "  Monitor"))
-            (button :class "menu-btn" :onclick "thunar & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
+            (button :class "menu-btn" :onclick "nautilus & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
                 (label :xalign 0 :text "  File Manager"))
                 (button :class "menu-btn" :onclick "python3 ~/Documenti/impostazioni/main.py & eww -c ~/.config/waybar/scripts/menu close sysmenu" 
                 (label :xalign 0 :text "  Impostazioni"))
