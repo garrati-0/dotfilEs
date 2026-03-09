@@ -23,6 +23,8 @@ Il cuore del setup. Un control center completo e menu rapidi per gestire il sist
 **Versione 2 (Android Style):**
 ![Control Center v2](assets/2026-03-09_191418.png)
 
+![Menu Rapidi](assets/2026-03-06_213556.png)
+
 #### Gestione Rete, Bluetooth e Audio
 ![Gestione Rete](assets/2026-03-06_213528.png)
 ![Gestione Bluetooth](assets/2026-03-06_213535.png)

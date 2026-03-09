@@ -23,6 +23,8 @@ The heart of the setup. A complete control center and quick menus to manage the 
 **Version 2 (Android Style):**
 ![Control Center v2](assets/2026-03-09_191418.png)
 
+![Quick Menus](assets/2026-03-06_213556.png)
+
 #### Network, Bluetooth, and Audio Management
 ![Network Management](assets/2026-03-06_213528.png)
 ![Bluetooth Management](assets/2026-03-06_213535.png)
